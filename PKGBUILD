@@ -46,7 +46,7 @@ build() {
   [[ $CARCH == "x86_64" ]] && CFLAGS="$CFLAGS -fPIC"
 
   ./configure --prefix=/usr
-  make SHLIB_LIBS=-lncurses
+  make -j1 SHLIB_LIBS=-lncurses
 }
 
 package() {

@@ -17,7 +17,7 @@ backup=('etc/inputrc')
 options=('!emptydirs')
 install=readline.install
 source=(http://ftp.gnu.org/gnu/readline/readline-$_basever.tar.gz{,.sig}
-        inputrc)
+        inputrc winch.diff)
 validpgpkeys=('7C0135FB088AAF6C66C650B9BB5869F064EA74AB') # Chet Ramey
 
 if [ $_patchlevel -gt 0 ]; then
@@ -32,6 +32,8 @@ prepare() {
     msg "applying patch readline${_basever//.}-$(printf "%03d" $_p)"
     patch -p0 -i ../readline${_basever//.}-$(printf "%03d" $_p)
   done
+
+  patch -Np1 -i ../winch.diff
 
   # remove RPATH from shared objects (FS#14366)
   sed -i 's|-Wl,-rpath,$(libdir) ||g' support/shobj-conf
@@ -55,6 +57,7 @@ package() {
 md5sums=('33c8fb279e981274f485fd91da77e94a'
          'SKIP'
          '58d54966c1191db45973cb3191ac621a'
+         '73c20eae17e006ef5e845eab595b986c'
          '4343f5ea9b0f42447f102fb61576b398'
          'SKIP'
          '700295212f7e2978577feaee584afddb'
